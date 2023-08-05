@@ -15,7 +15,7 @@ const Navbar = ({logedin, setLogedin}) => {
     }
     return ( 
         <nav className="navbar">
-            <h1>Basem Blogs</h1>
+            <h1>Your Blogs</h1>
             <div className="links">
                 <Link to="/">Home</Link>
                 {!logedin && 
