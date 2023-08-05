@@ -98,3 +98,75 @@
   border-radius: 8px;
   cursor: pointer;
 }
+.todo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;    
+}
+
+.todo {
+  width: 70%;
+  margin: 3rem auto 0 auto;    
+}
+
+.header {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+input {
+  padding: 10px 3px;
+  width: 100%;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.btn {
+  padding: 10px 1rem;
+  background: #334;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.todo-content {
+  margin-top: 2rem;
+}
+.login-container{
+  width: 50%;
+}
+.login{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-form{
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+}
+.login-form input{
+  margin: 10px 0;
+}
+.login-btn, .logout{
+  background: #f1356d;
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.logout{
+  background: #334;
+}
+.toggle-link{
+  cursor: pointer;
+  color: #f1356d;
+}

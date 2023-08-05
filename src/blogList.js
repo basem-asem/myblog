@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const BlogList = ({blogs, title, handleDelete}) => {
+const BlogList = ({blogs, title}) => {
     return (
         <div className="blog-list">
             <h2>{title}</h2>
@@ -9,7 +9,6 @@ const BlogList = ({blogs, title, handleDelete}) => {
                     <Link to={`/blogs/${blog.id}`}>
                     <h2>{blog.title}</h2>
                     <p>Written By {blog.author}</p>
-                    {/* <button onClick={() => handleDelete(blog.id)}>Delete blogs</button> */}
                     </Link>
                 </div>
             ))}

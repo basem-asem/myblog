@@ -1,29 +1,46 @@
 import { useHistory, useParams } from "react-router-dom";
-import useFetch from "./usefetch";
+import { db } from './firebase';
+import { doc, getDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
+
 
 const BlogDetails = () => {
     const { id } = useParams();
-    const { data: blog, error, ispending} = useFetch('http://localhost:8000/blogs/' + id);
     const history = useHistory()
+    const [blog, setBlog] = useState(null);    
 
-    const hamdleClick = () => {
-        fetch('http://localhost:8000/blogs/' + blog.id, {
-            method: "DELETE"
-        }).then(() => {
-            history.push("/")
-        })
+    const fetchBlogDetails = async () => {
+        try {
+            const docRef = doc(db, "blogs", id);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                setBlog(docSnap.data());
+            } else {
+                throw new Error("Blog not found!");
+            }
+        } catch (error) {
+            throw new Error("Error fetching blog details: " + error.message);
+        }
+    };
+    useEffect(()=>{
+        fetchBlogDetails();
+    }, [])
+
+    const goBack = ()=>{
+        history.push("/")
     }
     return (  
         <div className="blog-details">
-            { ispending && <div> Loading ... </div> }
-            { error && <div> {error} </div> }
+            {/* { ispending && <div> Loading ... </div> }
+            { error && <div> {error} </div> } */}
             { blog && (
                 <article>
                     <h2>{blog.title}</h2>
                     <p>Written By {blog.author}</p>
                     <div>{blog.body}</div>
-                    <button onClick={hamdleClick}>Delete</button>
+                    <button onClick={goBack}>Back</button>
                 </article>
+                
             )}
         </div>
     );

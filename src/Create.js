@@ -1,28 +1,28 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { collection, addDoc } from "@firebase/firestore";
+import { db } from './firebase';
 
 const Create = () => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
-    const [author, setAuthor] = useState('mario');
+    const [author, setAuthor] = useState('');
     const [ispending, setIspending] = useState(false);
     const history = useHistory()
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const blog = {title, body, author};
-
         setIspending(true);
-
-        fetch('http://localhost:8000/blogs', {
-            method: 'POST',
-            headers: { "Content-Type": "application/json"},
-            body: JSON.stringify(blog)
-        }).then(() => {
-            console.log('new blog added');
-            setIspending(false);
-            history.push("/")
-        })
+        try {
+            const docRef = await addDoc(collection(db, "blogs"), {
+              title: title,
+              body: body,
+              author: author,    
+            });
+            history.push('/');
+          } catch (e) {
+            console.error("Error adding document: ", e);
+          }
     }
     return ( 
         <div className="create">
@@ -39,16 +39,15 @@ const Create = () => {
                 <textarea 
                 required
                 value={body}
+                rows={6}
                 onChange={(e) => setBody(e.target.value)}
                 ></textarea>
                 <label>Blog author:</label>
-                <select
+                <input
+                type="text"
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
-                >
-                    <option value="mario">mario</option>
-                    <option value="yoshi">yoshi</option>
-                </select>
+                />
                 {!ispending && <button>Add Blog</button>}
                 {ispending && <button>Adding Blog...</button>}
             </form>
